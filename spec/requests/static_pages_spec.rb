@@ -4,9 +4,14 @@ describe "Static pages" do
 
   describe "Home page" do
 
-    it "should have the content '360'" do
+    it "should have the h1 '360'" do
       visit '/static_pages/home'
-      page.should have_content("360")
+      page.should have_selector('h1', :text => "360")
+    end
+
+    it "should have the title '360 | Home'" do
+      visit '/static_pages/home'
+      page.should have_selector('title', :text => "360 | Home")
     end
 
   end
