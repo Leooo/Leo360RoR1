@@ -121,4 +121,20 @@ describe User do
     its(:remember_token) {should_not be_blank}
   end
 
+  describe "feedback_filled associations" do
+    before {@user.save}
+    let!(:micropost) do
+      FactoryGirl.create(:feedback_filled, user: @user)
+    end
+
+    it "should destroy associated feedback_filled" do
+      feedback_filleds=@user.feedback_filleds
+      @user.destroy
+      feedback_filleds.each do |feedback_filled|
+        FeedbackFilled.find_by_id(feedback_filled.id).should be_nil
+      end
+    end
+            
+  end
+
 end

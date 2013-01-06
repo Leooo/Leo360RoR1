@@ -8,4 +8,10 @@ FactoryGirl.define do
       admin true
     end
   end
+
+  factory :feedback_filled do
+    profile_id 1
+    user
+  end
+
 end
