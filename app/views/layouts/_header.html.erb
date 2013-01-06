@@ -1,3 +1,7 @@
+<!-- <%= debug(signed_in?) %>
+<%= debug(current_user) %>
+<%= debug(@current_user) %>
+<%= debug(cookies[:remember_token]) %> -->
   <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
@@ -7,7 +11,9 @@
           <li><%= link_to "Home", root_path %></li>
           <li><%= link_to "Help", help_path %></li>
           <% if signed_in? %>
-            <li><%= link_to "Users", '#' %></li>
+            <% if admin? %>
+              <li><%= link_to "Users", users_path %></li>
+            <% end %>
             <li id="fat-menu" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 Account <b class="caret"></b>
