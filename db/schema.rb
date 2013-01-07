@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130106205638) do
+ActiveRecord::Schema.define(:version => 20130107103123) do
 
   create_table "feedback_filleds", :force => true do |t|
     t.integer  "profile_id"
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(:version => 20130106205638) do
   add_index "feedback_filleds", ["profile_id", "user_id"], :name => "index_feedback_filleds_on_profile_id_and_user_id", :unique => true
   add_index "feedback_filleds", ["profile_id"], :name => "index_feedback_filleds_on_profile_id"
   add_index "feedback_filleds", ["user_id"], :name => "index_feedback_filleds_on_user_id"
+
+  create_table "profiles", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "profiles", ["name"], :name => "index_profiles_on_name"
 
   create_table "users", :force => true do |t|
     t.string   "name"

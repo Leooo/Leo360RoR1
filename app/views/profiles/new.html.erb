@@ -1,0 +1,15 @@
+<% provide(:title, 'New profile') %>
+<h1>New profile</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@profile) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.submit "Create new profile", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<li>
+<%= link_to feedback_filled.id, feedback_filled %>
+<% if current_user.admin? %>
+  <%= link_to "delete", feedback_filled, method: :delete, confirm: "Are you sure?" %>
+<% end %>
+</li>

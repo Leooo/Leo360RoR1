@@ -1,6 +1,6 @@
 class FeedbackFilled < ActiveRecord::Base
-  attr_accessible :profile_id
-  belongs_to :user
+  belongs_to :user, :inverse_of => :feedback_filleds
+  belongs_to :profile, :inverse_of => :feedback_filleds
 
   validates :user_id, presence: true
   validates :profile_id, presence: true
