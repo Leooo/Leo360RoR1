@@ -2,7 +2,13 @@ require 'spec_helper'
 
 describe "Authentification" do
  
-  subject {page}
+    before do
+      @user=FactoryGirl.create(:user)
+      @other_user=FactoryGirl.create(:user)
+      @admin=FactoryGirl.create(:admin)
+    end
+   
+    subject {page}
 
   describe "signin page" do
 
@@ -24,11 +30,13 @@ describe "Authentification" do
     end
 
     describe "with valid information" do
-      let (:user) {FactoryGirl.create(:user)}
-      before {sign_in user}
-      it { should have_selector('title',text:user.name)}
-      it { should have_link('Profile',href: user_path(user))}
-      it { should have_link('Settings',href: edit_user_path(user))}
+      
+      before do
+        sign_in @user
+      end
+      it { should have_selector('title',text:@user.name)}
+      it { should have_link('Profile',href: user_path(@user))}
+      it { should have_link('Settings',href: edit_user_path(@user))}
       it { should have_link('Sign out',href: signout_path)}
       it { should_not have_link('Users',href: users_path)}
       it { should_not have_link('Sign in',href: signin_path)}
@@ -40,14 +48,14 @@ describe "Authentification" do
     
     describe "for non-signed-in users" do
       
-      let(:user) {FactoryGirl.create(:user)}
+      #let(:user){FactoryGirl.create(:user)}
 
-      describe "when attempting to visit a protected page" do
+      describe "when attempting to visit a signed-in-only page" do
 
         before do
-          visit edit_user_path(user)
-          fill_in "Email",          with: user.email
-          fill_in "Password",       with: user.password
+          visit edit_user_path(@user)
+          fill_in "Email",          with: @user.email
+          fill_in "Password",       with: @user.password
           click_button "Sign in"
         end
 
@@ -62,20 +70,26 @@ describe "Authentification" do
 
       describe "in the Users controller" do
 
-        describe "visiting the edit page" do
-          before {visit edit_user_path(user)}
+        describe "visiting his edit page" do
+          before {visit edit_user_path(@user)}
           it {should have_selector('title',text:'Sign in')}
         end
-        #LV
-        describe "visiting a user page" do
-          before {visit user_path(user)}
+        
+        describe "visiting his page" do
+          before {visit user_path(@user)}
           it {should have_selector('title',text:'Sign in')}
         end
 
         describe "submitting to the update action" do
-          before {put user_path(user)}
+          before {put user_path(@user)}
           specify {response.should redirect_to(signin_path)}
         end
+
+        describe "submitting to the get action (?)" do
+          before {get user_path(@user)}
+          specify {response.should redirect_to(signin_path)}
+        end
+
 
       end
 
@@ -83,12 +97,12 @@ describe "Authentification" do
 
     describe "as non-admin user" do
 
-      let(:user) {FactoryGirl.create(:user)}
-      let(:non_admin) {FactoryGirl.create(:user)}
-      before {sign_in non_admin}
+      #let(:user){ FactoryGirl.create(:user)}
+      #let(:non_admin){ FactoryGirl.create(:user)}
+      before {sign_in @user}
 
       describe "submitting a DELETE request to the Users#destroy action" do
-        before {delete user_path(user)}
+        before {delete user_path(@other_user)}
         specify {response.should redirect_to(root_path)}
       end
       
@@ -97,22 +111,23 @@ describe "Authentification" do
         it {should_not have_selector('title',text: 'All users')}
       end
         
-       #LV
       describe "as wrong user" do
-        let(:wrong_user) {FactoryGirl.create(:user,email: "wrong@example.com")}
+        #let(:wrong_user){FactoryGirl.create(:user)}
 
         describe "visiting a show page" do
-          before {visit user_path(wrong_user)}
-          it { should_not have_selector('title', text: wrong_user.name)} 
+          before {visit user_path(@other_user)}
+          it { should_not have_selector('title', text: @other_user.name)}
+          it { should have_selector('h1', text: "360")}
         end
 
         describe "visiting Users#edit page" do
-          before {visit edit_user_path(wrong_user)}
+          before {visit edit_user_path(@other_user)}
           it {should_not have_selector('title', text:full_title('Edit user'))}
+          it { should have_selector('h1', text: "360")}
         end
 
         describe "submitting a PUT request to the Users#update action" do
-          before {put user_path(wrong_user)}
+          before {put user_path(@other_user)}
           specify {response.should redirect_to(root_path)}
         end
  
@@ -120,8 +135,8 @@ describe "Authentification" do
 
       describe "as an admin user" do
 
-        let(:admin) {FactoryGirl.create(:admin)}
-        before {sign_in admin}
+        #let(:admin) {FactoryGirl.create(:admin)}
+        before {sign_in @admin}
 
         it { should have_link('Users',href: users_path)}
 
