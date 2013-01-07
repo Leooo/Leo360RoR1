@@ -26,14 +26,14 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: {minimum: 6}
   validates :password_confirmation, presence: true
 
+  def fetch_feedback_filled_by_name(profile_name)
+    FeedbackFilled.fetch_by_names(profile_name,self.name)
+  end
+  
   private
 
     def create_remember_token
       self.remember_token=SecureRandom.urlsafe_base64
     end
 
-    def find_feedback_filled_by_name(profile_name)
-      FeedbackFilled.find_by_names(profile_name,self.name)
-    end
-  
 end

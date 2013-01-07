@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :user do
-    sequence(:name) {|n| "Person #{n}"}
-    sequence(:email) {|n| "person_#{n}@example.com"}
+    sequence(:name) {|n| "User #{n}"}
+    sequence(:email) {|n| "user_#{n}@example.com"}
     password "foobar"
     password_confirmation "foobar"
     factory :admin do
@@ -9,9 +9,13 @@ FactoryGirl.define do
     end
   end
 
-  factory :feedback_filled do
-    profile_id 1
-    user
+  factory :profile do
+    sequence(:name) {|n| "Profile #{n}"}
   end
 
+  factory(:feedback_filled) do
+    profile
+    user
+  end
+  
 end

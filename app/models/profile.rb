@@ -7,10 +7,12 @@ class Profile < ActiveRecord::Base
   validates :name,presence: true, length: { maximum: 50 },
                   uniqueness: {case_sensitive: false}
  
-  
+  def fetch_feedback_filled_by_name(user_name)
+    FeedbackFilled.fetch_by_names(self.name,user_name)
+  end
+      
+private
 
-    def find_feedback_filled_by_name(user_name)
-      FeedbackFilled.find_by_names(self.name,user_name)
-    end
+
 
 end

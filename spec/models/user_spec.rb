@@ -123,7 +123,7 @@ describe User do
 
   describe "feedback_filled associations" do
     before {@user.save}
-    let!(:micropost) do
+    before do
       FactoryGirl.create(:feedback_filled, user: @user)
     end
 
