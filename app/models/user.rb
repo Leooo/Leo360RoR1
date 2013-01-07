@@ -32,4 +32,8 @@ class User < ActiveRecord::Base
       self.remember_token=SecureRandom.urlsafe_base64
     end
 
+    def find_feedback_filled_by_name(profile_name)
+      FeedbackFilled.find_by_names(profile_name,self.name)
+    end
+  
 end

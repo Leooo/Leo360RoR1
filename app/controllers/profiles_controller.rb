@@ -41,8 +41,10 @@ class ProfilesController < ApplicationController
 
     def after_create
       @profile.users << current_user
-      #redirect_to @profile.feedback_filleds.find
-      redirect_to @profile
+      @fbck=FeedbackFilled.find_by_names("tt","admin")
+      #redirect_to @profile.find_feedback_filled_by_name(current_user.name)
+      #redirect_to @profile.find_feedback_filled_by_name("admin")
+      redirect_to @fbck
     end
 
 end
