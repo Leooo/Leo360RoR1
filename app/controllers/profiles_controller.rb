@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_filter :admin_user
+  before_filter :admin_user,          only: [:show,:edit, :update, :destroy, :index]
 
   def new
     @profile=Profile.new

@@ -3,8 +3,8 @@ Leo360RoR1::Application.routes.draw do
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :feedback_filleds
-  resources :profiles
+  resources :feedback_filleds, only: [:show, :index, :destroy]
+  resources :profiles, except: [:edit, :update]
 
   match '/help', to: 'static_pages#help'
   match '/about', to: 'static_pages#about'
