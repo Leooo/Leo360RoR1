@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130107103123) do
+ActiveRecord::Schema.define(:version => 20130108190648) do
 
   create_table "feedback_filleds", :force => true do |t|
     t.integer  "profile_id"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(:version => 20130107103123) do
   add_index "feedback_filleds", ["profile_id"], :name => "index_feedback_filleds_on_profile_id"
   add_index "feedback_filleds", ["user_id"], :name => "index_feedback_filleds_on_user_id"
 
+  create_table "general_elements", :force => true do |t|
+    t.integer  "feedback_filled_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "taxo_nationality_id"
+    t.integer  "taxo_gender_id"
+  end
+
   create_table "profiles", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -31,6 +39,20 @@ ActiveRecord::Schema.define(:version => 20130107103123) do
   end
 
   add_index "profiles", ["name"], :name => "index_profiles_on_name"
+
+  create_table "taxo_genders", :force => true do |t|
+    t.string   "gender"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "taxo_genders", ["gender"], :name => "index_taxo_genders_on_gender", :unique => true
+
+  create_table "taxo_nationalities", :force => true do |t|
+    t.string   "nationality"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

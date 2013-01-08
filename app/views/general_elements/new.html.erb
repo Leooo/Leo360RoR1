@@ -1,0 +1,18 @@
+<% provide(:title, 'General Element') %>
+<h1>General Element</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@general_element) do |f| %>
+
+      <%= f.label :nationality, 'Country of origin' %>
+      <%= f.autocomplete_field :taxo_nationality, autocomplete_taxo_nationality_nationality_general_elements_path %>
+
+      <%= f.label :gender %>
+      <%= f.collection_select :taxo_gender_id, TaxoGender.find(:all), :id, :gender, :prompt =>"Select a gender" %>
+
+      <%= f.submit "Create element", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
+

@@ -5,6 +5,9 @@ Leo360RoR1::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :feedback_filleds
   resources :profiles, except: [:edit, :update]
+  resources :general_elements do
+    get :autocomplete_taxo_nationality_nationality, :on => :collection
+  end
 
   match '/help', to: 'static_pages#help'
   match '/about', to: 'static_pages#about'
