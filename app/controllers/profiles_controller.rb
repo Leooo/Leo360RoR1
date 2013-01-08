@@ -41,7 +41,7 @@ class ProfilesController < ApplicationController
 
     def after_create
       @profile.users << current_user
-      redirect_to @profile.fetch_feedback_filled_by_name(current_user.name)
+      redirect_to edit_feedback_filled_path(@profile.fetch_feedback_filled_by_name(current_user.name).id)
     end
 
 end

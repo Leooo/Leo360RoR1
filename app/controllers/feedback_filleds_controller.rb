@@ -9,6 +9,20 @@ class FeedbackFilledsController < ApplicationController
   def index
     @feedback_filleds=FeedbackFilled.paginate(page:params[:page])    
   end
+  
+  def edit
+    @feedback_filled=FeedbackFilled.find(params[:id])
+  end
+
+  def update
+    @feedback_filleds=FeedbackFilled.find(params[:id])
+    if @feedback_filled.update_attributes(params[:feedback_filled])
+      flash[:success]="Feedback updated"
+      redirect_to @feedback_filled
+    else
+      render 'edit'
+    end
+  end
 
   def destroy
     FeedbackFilled.find(params[:id]).destroy

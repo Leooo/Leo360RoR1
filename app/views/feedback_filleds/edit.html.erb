@@ -1,0 +1,15 @@
+<% provide(:title, 'Edit feedback') %>
+<h1>Update your feedback on <%= @feedback_filled.profile.name %></h1>
+<div class="row">
+  <%= render 'shared/error_messages', object: @feedback_filled %>
+  <div class="span6 offset3">
+
+    <%= form_for(@feedback_filled) do |f| %>
+
+
+
+      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
